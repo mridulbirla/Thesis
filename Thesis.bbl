@@ -1,0 +1,17 @@
+\begin{thebibliography}{1}
+
+\bibitem{1}
+Peter~J. Diggle and Richard~J. Gratton.
+\newblock Monte carlo methods of inference for implicit statistical models.
+\newblock {\em Journal of the Royal Statistical Society. Series B
+  (Methodological)}, 46(2):193--227, 1984.
+
+\bibitem{GanTut}
+Ian Goodfellow.
+\newblock Nips 2016 tutorial: Generative adversarial networks.
+\newblock 2016.
+
+\bibitem{Gan-overview}
+\url{https://ishmaelbelghazi.github.io/ALI/}.
+
+\end{thebibliography}
