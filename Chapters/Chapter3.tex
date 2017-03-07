@@ -42,6 +42,7 @@ Mathematically, let x,  $\theta_{G}$  and $\theta_{D}$ are be a data variable ,o
 $$ F (\theta_{G}, \theta_{D}) = E_{x\sim p_{data}} [log (D (x; \theta_{D}))] + E_{z\sim N(0,I)}\log (1- D(G (z; \theta_{G}) ; \theta_{D}))$$
 \subsection{Real World Example}
 To understand GAN better,lets take a real world analogy. Suppose G is a counterfeit artist who produces fake money and D is a undercover agent from FBI who acting as buyer. The task of D is to differentiate the money. To master the skill, G produces a fake currency batch and sells them to the D . If D identifies the batch then G updates its skill based on feedback fro the G. In this way  both goes back and forward, till G has learn the art of producing fake money.
+\subsection{Algorithm}
 
 
 
