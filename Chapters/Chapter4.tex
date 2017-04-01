@@ -1,6 +1,8 @@
 \chap{Enhanced Generative Adversarial Network}
 
 \section{Introduction}
+The original GAN as we discussed in the previous chapters suffered from various issues such s model collapse, convergence issue. There have been many variation which have come up. In this chapter we discuss the architecture and methodologies which we have adopted in our work.  
+
 
 \section{GAN Architecture} 
 
@@ -24,7 +26,7 @@ Training a GAN is always a tricky part. This work uses DCGAN\cite{DCGAN} as base
 \subsection{BatchNomalization}
 
 Batch Normalization was first introduced by Ioffe \textit{et al.}\cite{BatchNorm}. It is a major landmark in area of deep learning as most of the current deep neural network frameworks contains batch normalization. 
-To understand batch normalization, we need to understand the problem it is trying to solve. Its major aim is to minimize internal co-variance shift. Internal covariance shift refers to the change in input distribution as we are feeding data in mini batches. Since a neural network are designed in hierarchical fashion, so even small change in form of an outlier can get amplified as we are dealing with generally more than a million parameters and several layers. To rectify this problem, we normalize each batch at every layer, by both mean and variance. This process is commonly called as whitning. The major advantages of the batch normalization are as follows.
+To understand batch normalization, we need to understand the problem it is trying to solve. Its major aim is to minimize internal co-variance shift. Internal covariance shift refers to the change in input distribution as we are feeding data in mini batches. Since a neural network are designed in hierarchical fashion, even small change in form of an outlier can get amplified as we are dealing with generally more than a million parameters and several layers. To rectify this problem, we normalize each batch at every layer, by both mean and variance. This process is commonly called as whitning. The major advantages of the batch normalization are as follows.
 \begin{itemize}
     \item Initial value of weights have less impact on gradient descent.
     \item It helps in keeping higher learning rate and accuracy. Hence it reduces overall training time and this helps in faster training of the GANs.
@@ -37,7 +39,7 @@ The concept of deconvolution was first introduced by Zeiler \textit{et al} \cite
 
 
 \par
-It basically is going from output of some convolution to the input to that convolution.For instance it is going from green matrix to the blue matrix as shown in below figure. So given a kernel K, the type of convoution is defined by how forward or backward passes are calculated\cite{Deconv-Theano}.
+It is basically going from output of some convolution to the input to that convolution. For instance, it is going from the green matrix to the blue matrix as shown in the below figure. So given a kernel K, the type of convolution is defined by how forward or backward passes are calculated\cite{Deconv-Theano}.
 
 
 \begin{figure}[ht]
