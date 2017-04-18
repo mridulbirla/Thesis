@@ -1,34 +1,30 @@
 \chap{Enhanced Generative Adversarial Network}
 
 \section{Introduction}
-The original GAN as we discussed in the previous chapters, suffered from various key issues such as model collapse, difficulty in convergence which have resulted in poor quality image generation. Over the last couple of years the original GAN algorithm has been enhanced, tweaked and evolved by using latest advancement in deep neural networks. In this chapter, we discuss the architecture and methodologies which we have adopted in our work.  
+The original GAN as we discussed in the previous chapters, suffered from various key issues such as model collapse, difficulty in convergence which have resulted in poor quality of images being generated. Over the last couple of years the original GAN algorithm has been enhanced, tweaked and evolved  with the latest advancement in deep neural networks. In this chapter, we discuss the architecture and methodologies which we have adopted in our work.  
 
 
-\section{GAN Architecture} 
-
-Before directly jumping to the condition GAN, lets look the baseline GAN which is the core system design of this work. Later in the next subsection, we will look at the changes which needed to be made for conditional image generation. 
-\par
+\section{Conditional GAN Architecture} 
 The original paper's\cite{Original-GAN} generator architecture consisted of rectifier linear\cite{RELU} and sigmoid activations, while the discriminator net used maxout [10] activations. The results were good but lacked stability and also suffered from the problem of model collapse.
 \par
-Later, Radford \textit{et al.}\cite{DCGAN} proposed deep convolution generative adversarial network. As the name suggests, they used deep convolution with fractional stride convolution and batch normalization to stabilize the model. This work uses DCGAN as the baseline architecture. The \cref{fig:DCGAN} shows the architecture of a generator and discriminator. In this work, we also use RELU as our activation function for all the layers expect in the output layer. As corroborated by the authors Radford \textit{et al.}\cite{DCGAN} RELU can help in convergence of the model and it also covers the color space of the distribution.
-\par
-
-By looking at the architecture of generator and discriminator, we notice that they are  opposite to each other. The generator uses up-convolution or commonly known as backward convolution to generate images. %J. Long, E. Shelhamer, and T. Darrell, “Fully convolutional networks for semantic segmentation,”CoRR, vol. abs/1411.4038, 2014. [Online]. Available: http://arxiv.org/abs/1411.4038
-The discriminator is a standard deep convolution neural network used for classification of a real or a fake image.
-\begin{figure}
+Later, Radford \textit{et al.}\cite{DCGAN} proposed deep convolution generative adversarial network. As the name suggests, the authors used deep convolution with fractional stride convolution and batch normalization to stabilize the model. This work uses DCGAN with conditional hot vector to its inputs to the baseline architecture . The \cref{fig:DCGAN} shows the architecture of a generator and discriminator. In this work, we use RELU as our activation function for all the layers expect in the output layer. As corroborated by the authors Radford \textit{et al.}\cite{DCGAN} RELU can help in convergence of the model and it also covers the color space of the distribution.
+\begin{figure}[H]
   \centering
-    \includegraphics[scale=.7, angle=0]{Files/Generator-Architecture.png}
+    \includegraphics[scale=.3, angle=0]{Files/DCGAN.png}
     \caption[Generator Architecture]{Generator Architecture\cite{DCGAN}}
     \label{fig:DCGAN}
 \end{figure}
 
-\subsection{Custom Architecture}
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.3, angle=0]{Files/cgan.png}
+    \caption[Conditional Generative Adversarial Network]{Conditional Generative Adversarial Network}
+    \label{fig:CGAN}
+\end{figure}
+By looking at the architecture of generator and discriminator in \cref{fig:DCGAN} , we will notice that they are  opposite to each other. The generator uses up-convolution or commonly known as backward convolution to generate images where as %J. Long, E. Shelhamer, and T. Darrell, “Fully convolutional networks for semantic segmentation,”CoRR, vol. abs/1411.4038, 2014. [Online]. Available: http://arxiv.org/abs/1411.4038
+the discriminator is a standard deep convolution neural network used for classification of a real or a fake image.
 
-In this work we modify this architecture to generate  
-
-\section{Training GAN}
-
-Training a GAN is has always a tricky part and is still an ongoing research. This work uses DCGAN\cite{DCGAN} as baseline, as the DCGAN has shown that it can stabilize the networks to a great extent. The major contribution of the DCGAN in our work, is the use of Batch-Normalization, Strided Convolution and ADAM optimizer. We will go through each of these steps one by one.
+The major contribution of the DCGAN in our work, is the use of Batch-Normalization, Strided Convolution and ADAM optimizer. We will go through each of these steps one by one.
 \subsection{Batch Normalization}
 
 Batch Normalization was first introduced by Ioffe  \textit{et al.}\cite{BatchNorm}. It is a major landmark in the area of deep learning as most of the current deep neural network frameworks contain batch normalization. 
@@ -40,19 +36,18 @@ To understand batch normalization, we need to understand the problem it is tryin
 
 \subsection{Strided Convolution}
 
-The concept of deconvolution was first introduced by Zeiler \textit{et al} \cite{Deconv}. It is also commonly known as  strided convolution, transposed fractional convolution or upsampling.
-
-\par
-It is basically going from output of some convolution to the input of that convolution. For instance, it is going from the green matrix which is a convolution kernel to the blue matrix as shown in the below figure. So given a kernel K, the type of convolution is defined by how forward or backward passes are calculated\cite{Deconv-Theano}.
+The concept of deconvolution was first introduced by Zeiler \textit{et al} \cite{Deconv}. It is also commonly known as  strided convolution, transposed fractional convolution or upsampling. It is basically going from output of some convolution to the input of that convolution. For instance, it is going from the green matrix which is a convolution kernel to the blue matrix as shown in the below figure. So given a kernel K, the type of convolution is defined by how forward or backward passes are calculated\cite{Deconv-Theano}.
 
 
 \begin{figure}[H]
   \centering
-    \includegraphics[scale=.5, angle=0]{Files/simple-conv.png}
+    \includegraphics[scale=.4, angle=0]{Files/simple-conv.png}
     \caption[Simple Convolution]{Simple Convolution \cite{Deconv-Theano}}
     \label{fig: Simple Convolution}
+\end{figure}
+\begin{figure}[H]
   \centering
-    \includegraphics[scale=.4, angle=0]{Files/Frational-Stride-Conv.png}
+    \includegraphics[scale=.3, angle=0]{Files/Frational-Stride-Conv.png}
     \caption[Transpose Convolution ]{Transpose Convolution \cite{Deconv-Theano}}
     \label{fig: Strided Convolution}
 \end{figure}
@@ -67,9 +62,31 @@ Adaptive Moment Estimation, commonly known as ADAM optimizer is a stochastic gra
     \item Choosing correct learning is always a challenging task and it can cause longer time for SGD algorithm to converge.
     \item Specifically in our work, where we are trying to model the data and it is sparse, Vanilla SGD doesn't provide flexibility for having different learning rate for each weight.
 
-To overcome these problems, we use ADAM optimizer in our work. It combines adagrade\cite{Adagrade} and momentum-optimizer \cite{momentum}. 
+To overcome these problems, we use ADAM optimizer in our work. It combines adagrade\cite{Adagrade} and momentum-optimizer\cite{momentum} by storing not only exponentially decaying average of past squared gradients but also keeping potentially decaying average of past gradients $m_t$. The general steps of updating parameters using ADAM optimizer are as follows.
+\begin{itemize}
+    \item Initialize step size $\alpha$ and exponential decay parameter$\beta_1, \beta_2  \in [\![ 0,1]\!]$
+    \item Compute gradient $g_t$ at current time t.
+    \item Compute the first $m_t$ and second moment $v_t$.
+    \begin{equation*}\label{eq:moment}
+        \begin{aligned}
+            m_t = \beta_1 \times m_{t-1} + \left ( 1 - \beta_1 \right ) \times g_t \\
+            v_t= \beta_2 \times v_{t-1} + \left ( 1 - \beta_2 \right ) \times g_t^{2}
+        \end{aligned}
+    \end{equation*}
+    \item Compute bias-corrected first  and second moment estimate.
+     \begin{equation*}\label{eq:moment2}
+        \begin{aligned}
+            \widehat{m}_t = \frac{m_t}{1-{\beta_1}^{t}} \\
+            \widehat{v}_t = \frac{v_t}{1-{\beta_2}^{t}}
+        \end{aligned}
+    \end{equation*}
+    \item Now update the parameters$\theta$.
+    \begin{equation*}\label{eq:moment3}
+        \begin{aligned}
+            \theta_t =\theta_{t-1} - \alpha \times \frac{\widehat{m_{t}}}{\sqrt{\widehat{v_t} + \epsilon }}
+        \end{aligned}
+    \end{equation*}
+\end{itemize}
 
 \end{itemize}
- 
- 
  

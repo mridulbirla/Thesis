@@ -5,7 +5,16 @@
 
 \chap{Introduction}
 
-Deep learning has been one the major area of development in the field of Artificial Intelligence. It has paved way for many abstruse problem in the field of computer science specifically computer vision and natural language processing. Convolution neural network have become so powerful that they been able to classify images better than human. These networks at granular level have neurons which have been studied and visualized. It has shown that they are capable of learning specific image feature. In this work, we look at Generative adversarial neural network which are on step further advancement in this field. The standard neural network have shown excellent capability in classification task but they require supervised learning and large amount of labeled data. But sometime getting these huge data require lot of human effort and money. This work tries to reduce this by developing generative model which are capable of generating labeled data. These model falls under the category of unsupervised learning. 
-\section{Unsupervised Learning}
+In recent year there has been lot of research going on in area of deep learning. It has paved way for many abstruse problem in the field of computer vision. Convolution neural network have become so powerful that, they been able to object recognition better than human\cite{CNN-Better,krizhevsky2012imagenet,szegedy2015going,he2016deep,simonyan2014very}. Many researchers\cite{1608.08225} through empirical or statistical analysis have hypothesised why deep neural network work so very well.  had always  For many years deep learning used to be considered a black box as it has innumerable interacting, non linear parts. But recent progress was fueled by development of tools \cite{tensorflow2015-whitepaper} which enabled researchers to visualize and interpret the hidden layers of neural networks\cite{1506.06579}.
+The CNN have shown excellent capability in classification task\cite{CNN-Better} but they require large amount of labeled data. Labeling and gathering large data require lot of human effort and money. This work tries to reduce this by developing generative model which are capable of generating labeled data.
 
-Traditionally unsupervised learning used to be done using clustering algorithms.
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.3, angle=0]{Files/cnn_visaulize.jpeg}
+    \caption[Typical-looking filters on the first CONV layer of a imagenet]{Typical-looking filters on the first CONV layer}
+    \label{fig:visualize-cnn}
+\end{figure}
+
+\section{Synthetic Image Generation}
+Image generation is one the key research area in field of computer vision. From statistical point of view we are trying to mimic distribution of a data-set. In this work we are trying to synthesis the images based on some given condition. Most widely used method before GAN used probabilistic generative models which are discussed in section 2.1.This work uses Generative Adversarial network framework for image generation .This technique was first introduced by ..... . been The paper proposed framework which was highly unstable and laked quality generated images.  This work focuses on the aspect of stabilising and reviewing the latest GAN frameworks.
+
