@@ -1,67 +1,92 @@
-\chap{Experiments and Results}
-
+\chap{Enhanced Generative Adversarial Network}
 
 \section{Introduction}
+The original GAN as we discussed in the previous chapters, suffered from various key issues such as model and mode collapse, difficulty in convergence which have resulted in poor quality of images being generated. Over the last couple of years the original GAN algorithm has been enhanced, tweaked and evolved  with the latest advancement in deep neural networks. In this chapter, we discuss the architecture and methodologies which we have adopted in our work.  
 
-In this chapter, we look at the implementation perspective of the whole system. We also look at the three dataset we used and the results obtained from them. 
 
-\section{Implementation Details}
-To implement the conditional generative adversarial network we used Tensorflow\cite{tensorflow2015-whitepaper} with Kera\cite{keras}. The structure of generator and discriminator are described in \cref{Generator-Activation} and \cref{Discriminator-Table}.
-\begin{table}[ht]
-\centering
-\caption{Generator Architecture Specification}
-\label{Generator-Activation}
-\begin{tabular}{llll}
-Operation       & Stride & Features & Activation \\
-Merge Input     & -      & -        & -          \\
-Dense layer     & -      & -        & Sigmoid    \\
-Deconvolution 1 & 5 * 5  & 512      & RELU       \\
-Deconvolution 2 & 5 * 5    & 256      & RELU       \\
-Deconvolution 3 & 5 * 5   & 128      & RELU       \\
-Deconvolution 4 & 5 * 5   & 64       & RELU       \\
-Deconvolution 5 & 5 * 5  & 3        & Tanh      
-\end{tabular}
-\end{table}
-\begin{table}[ht]
-\centering
-\caption{Discriminator Architecture Specification}
-\label{Discriminator-Table}
-\begin{tabular}{llll}
-Operation     & Stride & Features & Activation \\
-Convolution 1 & 5 * 5  & 64       & Leaky RELU \\
-Convolution 2 & 5*5    & 128      & LeakyRELU  \\
-Convolution 3 & 5 *5   & 256      & LeakyRELU  \\
-Convolution 4 & 5 *5   & 512      & LeakyRELU  \\
-Convolution 5 & 5 * 5  & 1        & Softmax    \\
-Convolution 5 & 5*5    & 18       & Sigmoid   
-\end{tabular}
-\end{table}
-\section{Training}
-Since the discriminator was weak, before actual training we trained the discriminator in two steps. Firstly we added a conditional vector to its input and removed the classification output of it. And we trained the discriminator with real images with incorrect label to classify as fake image. Secondly , to the original discriminator we copied the weights from the previous training and trained again on real images to classify the them into the particular class.  
-\section{DataSet}
-\subsection{CelebA}
-The CelebFaces Attributes dataset (CelebA)\cite{celeba} contains 202599 face images of celebrities. As some of the categories are very less , so we removed certain categories from our training. . The sdistribution of the overall dataset is shown in \cref{fig:celeba}. As part of preprocessing, we crop the images to $64 \times 64$.The reason for cropping the images is to focus on faces in the images and as they are already aligned.
+\section{Conditional GAN Architecture} 
+The original paper's\cite{Original-GAN} generator architecture consisted of rectifier linear\cite{RELU} and sigmoid activations, while the discriminator net used maxout [10] activations. The results were good but lacked stability and also suffered from the problem of model collapse.
+\par
+Later, Radford \textit{et al.}\cite{DCGAN} proposed deep convolution generative adversarial network. As the name suggests, the authors used deep convolution with fractional stride convolution and batch normalization to stabilize the model. This work uses DCGAN with conditional hot vector to its inputs to the baseline architecture . The \cref{fig:DCGAN} shows the architecture of a generator and discriminator. In this work, we use RELU as our activation function for all the layers expect in the output layer. As corroborated by the authors Radford \textit{et al.}\cite{DCGAN} RELU can help in convergence of the model and it also covers the color space of the distribution.
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.3, angle=0]{Files/DCGAN.png}
+    \caption[Generator Architecture]{Generator Architecture\cite{DCGAN}}
+    \label{fig:DCGAN}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.3, angle=0]{Files/cgan.png}
+    \caption[Conditional Generative Adversarial Network]{Conditional Generative Adversarial Network}
+    \label{fig:CGAN}
+\end{figure}
+By looking at the architecture of generator and discriminator in \cref{fig:DCGAN} , we will notice that they are  opposite to each other. The generator uses up-convolution or commonly known as backward convolution to generate images where as %J. Long, E. Shelhamer, and T. Darrell, “Fully convolutional networks for semantic segmentation,”CoRR, vol. abs/1411.4038, 2014. [Online]. Available: http://arxiv.org/abs/1411.4038
+the discriminator is a standard deep convolution neural network used for classification of a real or a fake image.
+
+The major contribution of the DCGAN in our work, is the use of Batch-Normalization, Strided Convolution and ADAM optimizer. We will go through each of these steps one by one.
+\subsection{Batch Normalization}
+
+Batch Normalization was first introduced by Ioffe  \textit{et al.}\cite{BatchNorm}. It is a major landmark in the area of deep learning as most of the current deep neural network frameworks contain batch normalization. 
+To understand batch normalization, we need to understand the problem it is trying to solve. Its major aim is to minimize internal co-variance shift. Internal covariance shift refers to the change in input distribution as we are feeding data in mini batches. Since neural networks are designed in hierarchical fashion, even small change in the form of an outlier can get amplified, as we are dealing with generally more than a million parameters and several layers. To rectify this problem, we normalize each batch at every layer, by both mean and variance. This process is commonly called as whitning. The two major advantages of batch normalization are as follows.
+\begin{itemize}
+    \item Initial value of weights have less impact on gradient descent.
+    \item It helps in keeping higher learning rate and accuracy. Hence it reduces overall training time and this helps in faster training of the GANs.
+\end{itemize}
+
+\subsection{Strided Convolution}
+
+The concept of deconvolution was first introduced by Zeiler \textit{et al} \cite{Deconv}. It is also commonly known as  strided convolution, transposed fractional convolution or upsampling. It is basically going from output of some convolution to the input of that convolution. For instance, it is going from the green matrix which is a convolution kernel to the blue matrix as shown in the below figure. So given a kernel K, the type of convolution is defined by how forward or backward passes are calculated\cite{Deconv-Theano}.
 
 
 \begin{figure}[H]
   \centering
-    \includegraphics[scale=.3, angle=0]{Files/celeba-visualize.png}
-    \caption[Generator Architecture]{Generator Architecture\cite{DCGAN}}
-    \label{fig:celeba}
+    \includegraphics[scale=.4, angle=0]{Files/simple-conv.png}
+    \caption[Simple Convolution]{Simple Convolution \cite{Deconv-Theano}}
+    \label{fig: Simple Convolution}
 \end{figure}
-\subsection{CIFAR-10}
-
-\subsection{MNIST}
-The MNIST dataset is very standard image processing dataset. This dataset contains xxx images of digits from 0 to 9. This dataset helps in validating the models correctness in very short time. Since neural  network take lot of time to converge, so if we have some issue with our implementation or logic then we can debug in very short amount of time.
-
-
-
-\section{Evaluation}
-It is very challenging to evaluate the performance of GAN networks. So, to evaluate and examine the performance we devised two methods. In the first method we will use the same discriminator to evaluate the accuracy of these images. Also to examine the over-fitting we look at the latent space.
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.3, angle=0]{Files/Frational-Stride-Conv.png}
+    \caption[Transpose Convolution ]{Transpose Convolution \cite{Deconv-Theano}}
+    \label{fig: Strided Convolution}
+\end{figure}
 
 
 
+\subsection{ADAM Optimizer}
 
+Adaptive Moment Estimation, commonly known as ADAM optimizer is a stochastic gradient descent(SGD) optimizer. It was first proposed by Diederik \textit{et al.} \cite{Adam}. The vanilla stochastic gradient descent suffers from many problems. The three key issues which are directly related to our work are as follows:
+\begin{itemize}
+    \item In case of non convex error function, the neural network can be stuck at non local optima.
+    \item Choosing correct learning is always a challenging task and it can cause longer time for SGD algorithm to converge.
+    \item Specifically in our work, where we are trying to model the data and it is sparse, Vanilla SGD doesn't provide flexibility for having different learning rate for each weight.
 
+To overcome these problems, we use ADAM optimizer in our work. It combines adagrade\cite{Adagrade} and momentum-optimizer\cite{momentum} by storing not only exponentially decaying average of past squared gradients but also keeping potentially decaying average of past gradients $m_t$. The general steps of updating parameters using ADAM optimizer are as follows.
+\begin{itemize}
+    \item Initialize step size $\alpha$ and exponential decay parameter$\beta_1, \beta_2  \in [\![ 0,1]\!]$
+    \item Compute gradient $g_t$ at current time t.
+    \item Compute the first $m_t$ and second moment $v_t$.
+    \begin{equation*}\label{eq:moment}
+        \begin{aligned}
+            m_t = \beta_1 \times m_{t-1} + \left ( 1 - \beta_1 \right ) \times g_t \\
+            v_t= \beta_2 \times v_{t-1} + \left ( 1 - \beta_2 \right ) \times g_t^{2}
+        \end{aligned}
+    \end{equation*}
+    \item Compute bias-corrected first  and second moment estimate.
+     \begin{equation*}\label{eq:moment2}
+        \begin{aligned}
+            \widehat{m}_t = \frac{m_t}{1-{\beta_1}^{t}} \\
+            \widehat{v}_t = \frac{v_t}{1-{\beta_2}^{t}}
+        \end{aligned}
+    \end{equation*}
+    \item Now update the parameters $\theta_t$.
+    \begin{equation*}\label{eq:moment3}
+        \begin{aligned}
+            \theta_t =\theta_{t-1} - \alpha \times \frac{\widehat{m_{t}}}{\sqrt{\widehat{v_t} + \epsilon }}
+        \end{aligned}
+    \end{equation*}
+\end{itemize}
 
-
+\end{itemize}
+ 

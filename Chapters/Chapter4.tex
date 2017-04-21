@@ -1,92 +1,77 @@
-\chap{Enhanced Generative Adversarial Network}
+%*******10********20********30********40********50********60********70********80
 
+% For all chapters, use the newdefined chap{} instead of chapter{}
+% This will make the text at the top-left of the page be the same as the chapter
+
+\chap{Generative Adversarial Network}
 \section{Introduction}
-The original GAN as we discussed in the previous chapters, suffered from various key issues such as model collapse, difficulty in convergence which have resulted in poor quality of images being generated. Over the last couple of years the original GAN algorithm has been enhanced, tweaked and evolved  with the latest advancement in deep neural networks. In this chapter, we discuss the architecture and methodologies which we have adopted in our work.  
 
+The basic building block of this work is generative adversarial network. Since the first paper published by Ian \textit{et al.} \cite{Original-GAN} , there have been lot of recent advancements in generative adversarial networks. It has now become one of the most studied generative model. A lot of variations and different architectures have been developed after the first paper was published. In this chapter, we explain GAN from the very basics.
 
-\section{Conditional GAN Architecture} 
-The original paper's\cite{Original-GAN} generator architecture consisted of rectifier linear\cite{RELU} and sigmoid activations, while the discriminator net used maxout [10] activations. The results were good but lacked stability and also suffered from the problem of model collapse.
+\section{Generative Model}
+Generative adversarial networks works on the principle of maximum likelihood.
+%[https://arxiv.org/pdf/1701.00160.pdf].
+It means, when given a dataset, the model tries to provide probability distribution of the sample data, parametrized by $\theta$. %As this work is focused on computer vision,so the key relationship between images and statistics is that we can interpret images as samples from a high-dimensional probability distribution.
 \par
-Later, Radford \textit{et al.}\cite{DCGAN} proposed deep convolution generative adversarial network. As the name suggests, the authors used deep convolution with fractional stride convolution and batch normalization to stabilize the model. This work uses DCGAN with conditional hot vector to its inputs to the baseline architecture . The \cref{fig:DCGAN} shows the architecture of a generator and discriminator. In this work, we use RELU as our activation function for all the layers expect in the output layer. As corroborated by the authors Radford \textit{et al.}\cite{DCGAN} RELU can help in convergence of the model and it also covers the color space of the distribution.
-\begin{figure}[H]
-  \centering
-    \includegraphics[scale=.3, angle=0]{Files/DCGAN.png}
-    \caption[Generator Architecture]{Generator Architecture\cite{DCGAN}}
-    \label{fig:DCGAN}
+The generative models based on maximum likelihood can be based divided into explicit and implicit density model. Below figure classifies various models based on the maximum likelihood principal.
+%
+\begin{figure}[ht]
+    
+    \includegraphics[scale=.6, angle=0]{Files/taxanomy.png}
+    \caption[The panther]{Taxonomy of Generative Model\cite{GanTut}}
+    \label{fig: jordan}
 \end{figure}
 
-\begin{figure}[H]
+In explicit model, also known as prescribed probabilistic model, we explicitly define the distribution of random variable and specify the log likelihood function.
+In implicit model we don't need to define the density function\cite{1}. The model learn the function from the data and generate sample in a single step.
+%SJ:Grammatical error
+
+\section{The GAN  Concept}
+Generative Adversarial network works by inter playing two deep artificial neural networks, a generator(G) and a discriminator(D). Both of these networks play a min max game, where generator tries to produce a fake image and discriminator tries to identify whether it is a fake or a real image, as illustrated in Figure 3.2. In the below figure the generator is provided with a random noise to produce a fake data sample , whereas the discriminator is given both the real and fake image and it tries to classifies these data sample.
+%SJ:is figure number correct
+\begin{figure}[t]
+
   \centering
-    \includegraphics[scale=.3, angle=0]{Files/cgan.png}
-    \caption[Conditional Generative Adversarial Network]{Conditional Generative Adversarial Network}
-    \label{fig:CGAN}
+    \includegraphics[scale=.4, angle=0]{Files/gan-overview.png}
+    \caption[GAN overview]{ GAN overview\cite{Gan-overview}}
+    \label{fig: GAN-Overview}
 \end{figure}
-By looking at the architecture of generator and discriminator in \cref{fig:DCGAN} , we will notice that they are  opposite to each other. The generator uses up-convolution or commonly known as backward convolution to generate images where as %J. Long, E. Shelhamer, and T. Darrell, “Fully convolutional networks for semantic segmentation,”CoRR, vol. abs/1411.4038, 2014. [Online]. Available: http://arxiv.org/abs/1411.4038
-the discriminator is a standard deep convolution neural network used for classification of a real or a fake image.
+\newpage
+\subsection{Mathematical Definition}
+Mathematically, let x,  $\theta_{G}$  and $\theta_{D}$ be data variables, optimal hyper-parameters of the generator and discriminator model.
+Given a latent variable z, drawn from a Gaussian distribution, the generator transforms this variable to a sample from the data. And the discriminator tries to estimate whether x is from the data space $p_{data}$. The final objective function F becomes
+$$ \substack{min\\ G} \substack{max\\ D} F (\theta_{G}, \theta_{D}) = E_{x\sim p_{data}} [log (D (x; \theta_{D}))] + E_{z\sim N(0,I)}\log (1- D(G (z; \theta_{G}) ; \theta_{D}))$$
+\subsection{Real World Example}
+To understand GAN better, lets take a real world analogy. Suppose G is a counterfeit artist, who produces fake money and D is an undercover agent from FBI, who is acting as a buyer. The task of D is to differentiate the money. To master this skill, G produces a fake currency batch and sells it to D. If D identifies the batch then G updates its skill based on feedback from D. %SJ:feedback from G or D?
+In this way, both go back and forth, till G has learnt the art of producing fake money.
+\section{Algorithm}
+In this section we provide a basic algorithm for GAN. Basically for each iteration, we sample k noises and generate an data sample using generator. Now we feed this mini-batch of generated data sample combined with real data to the discriminator. And later update the parameters of the discriminator using stochastic gradient descent algorithm. Since we cannot directly compute the loss for generator, so we use discriminator gradient but in opposite direction.The reason for going in opposite is because we are training discriminator to accurately predict real sample whereas generator is being trained to to produce synthetic data samples. The below \cref{fig:GAN Algorithm} provides the actual algorithm.
+\begin{figure}[!htb]
 
-The major contribution of the DCGAN in our work, is the use of Batch-Normalization, Strided Convolution and ADAM optimizer. We will go through each of these steps one by one.
-\subsection{Batch Normalization}
-
-Batch Normalization was first introduced by Ioffe  \textit{et al.}\cite{BatchNorm}. It is a major landmark in the area of deep learning as most of the current deep neural network frameworks contain batch normalization. 
-To understand batch normalization, we need to understand the problem it is trying to solve. Its major aim is to minimize internal co-variance shift. Internal covariance shift refers to the change in input distribution as we are feeding data in mini batches. Since neural networks are designed in hierarchical fashion, even small change in the form of an outlier can get amplified, as we are dealing with generally more than a million parameters and several layers. To rectify this problem, we normalize each batch at every layer, by both mean and variance. This process is commonly called as whitning. The two major advantages of batch normalization are as follows.
-\begin{itemize}
-    \item Initial value of weights have less impact on gradient descent.
-    \item It helps in keeping higher learning rate and accuracy. Hence it reduces overall training time and this helps in faster training of the GANs.
-\end{itemize}
-
-\subsection{Strided Convolution}
-
-The concept of deconvolution was first introduced by Zeiler \textit{et al} \cite{Deconv}. It is also commonly known as  strided convolution, transposed fractional convolution or upsampling. It is basically going from output of some convolution to the input of that convolution. For instance, it is going from the green matrix which is a convolution kernel to the blue matrix as shown in the below figure. So given a kernel K, the type of convolution is defined by how forward or backward passes are calculated\cite{Deconv-Theano}.
-
-
-\begin{figure}[H]
   \centering
-    \includegraphics[scale=.4, angle=0]{Files/simple-conv.png}
-    \caption[Simple Convolution]{Simple Convolution \cite{Deconv-Theano}}
-    \label{fig: Simple Convolution}
-\end{figure}
-\begin{figure}[H]
-  \centering
-    \includegraphics[scale=.3, angle=0]{Files/Frational-Stride-Conv.png}
-    \caption[Transpose Convolution ]{Transpose Convolution \cite{Deconv-Theano}}
-    \label{fig: Strided Convolution}
+    \includegraphics[scale=.4, angle=0]{Files/Algorithm.png}
+    \caption[Vanilla GAN Algorithm]{ GAN Algorithm\cite{Gan-overview}}
+    \label{fig:GAN Algorithm}
 \end{figure}
 
+\section{Analysis}
 
+We can analyse the discriminator to see why GAN is effective. The basic idea is when we take derivative of the equation in section 3.3.1 with respect to discriminator function, then the final equation is the ratio of data distribution to the combined data distribution.
+%SJ:doesnt feel correct
+$$ D(x) =\frac{p_{data}}{p_{data} + p_{model}}$$
 
-\subsection{ADAM Optimizer}
+So, basically we are learning the ratio data density and the model density. In the below \cref{fig: GAN Graphical Explanation} visualizes the overall approach. The green  line is the $p_{model}$ which is generated by our generator G, the black line depicts our actual data distribution $p_{data}$ and the blue line is of discriminator differentiating real and generated data. The horizontal line z, below the graph is domain of the latent variable drawn from uniform gaussian %SJ:capital G?
+distribution and x is the data domain. The arrow indicates G(z). 
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.4, angle=0]{Files/GAN-Visualize.png}
+    \caption[GAN Algorithm Visualization]{ GAN Graphical Explanation\cite{Gan-overview}}
+    \label{fig: GAN Graphical Explanation}
+\end{figure}
 
-Adaptive Moment Estimation, commonly known as ADAM optimizer is a stochastic gradient descent(SGD) optimizer. It was first proposed by Diederik \textit{et al.} \cite{Adam}. The vanilla stochastic gradient descent suffers from many problems. The three key issues which are directly related to our work are as follows:
-\begin{itemize}
-    \item In case of non convex error function, the neural network can be stuck at non local optima.
-    \item Choosing correct learning is always a challenging task and it can cause longer time for SGD algorithm to converge.
-    \item Specifically in our work, where we are trying to model the data and it is sparse, Vanilla SGD doesn't provide flexibility for having different learning rate for each weight.
+\section{Images as Data}
 
-To overcome these problems, we use ADAM optimizer in our work. It combines adagrade\cite{Adagrade} and momentum-optimizer\cite{momentum} by storing not only exponentially decaying average of past squared gradients but also keeping potentially decaying average of past gradients $m_t$. The general steps of updating parameters using ADAM optimizer are as follows.
-\begin{itemize}
-    \item Initialize step size $\alpha$ and exponential decay parameter$\beta_1, \beta_2  \in [\![ 0,1]\!]$
-    \item Compute gradient $g_t$ at current time t.
-    \item Compute the first $m_t$ and second moment $v_t$.
-    \begin{equation*}\label{eq:moment}
-        \begin{aligned}
-            m_t = \beta_1 \times m_{t-1} + \left ( 1 - \beta_1 \right ) \times g_t \\
-            v_t= \beta_2 \times v_{t-1} + \left ( 1 - \beta_2 \right ) \times g_t^{2}
-        \end{aligned}
-    \end{equation*}
-    \item Compute bias-corrected first  and second moment estimate.
-     \begin{equation*}\label{eq:moment2}
-        \begin{aligned}
-            \widehat{m}_t = \frac{m_t}{1-{\beta_1}^{t}} \\
-            \widehat{v}_t = \frac{v_t}{1-{\beta_2}^{t}}
-        \end{aligned}
-    \end{equation*}
-    \item Now update the parameters$\theta$.
-    \begin{equation*}\label{eq:moment3}
-        \begin{aligned}
-            \theta_t =\theta_{t-1} - \alpha \times \frac{\widehat{m_{t}}}{\sqrt{\widehat{v_t} + \epsilon }}
-        \end{aligned}
-    \end{equation*}
-\end{itemize}
-
-\end{itemize}
- 
+As explained above we can use GAN to model the data. Now to use images as data, we have to look at the images from statistical point of view.  Images can be defined using probability density function. The probability density function gives us the likelihood of random variable, given the distribution. So if we have a large dataset of images then, we can visualize these images as PDFs in higher dimension space.
+%SJ:and or then in earlier sentence?
+The complexity of the distribution depends upon the number of images. Thus, our generator tries to find the true PDF from the real world data and generate images from it.
+%SJ:of or from?

@@ -24,6 +24,11 @@ In the work of Stack GAN (SGAN)\cite{stacked-gan}, the author proposes top-down 
 
 In the work of LRGAN \cite{LR-GAN}, the author takes advantage of viewing image as layers. In this work author uses 2 kind of generators , one responsible for generating background and the other generating foreground. In this whole process background is generated ones but foreground is generated recursively with help of long term short memory neural network\cite{hochreiter1997long}.The purpose of long term short memory network is to  provides information to the foreground generator about what has been generated. Each time a foreground image is generated, it is copy and pasted on the previously stitched image after doing affine and spatial transformation\cite{1506.02025}. 
 
+
+
+In the work of Information GAN, the author introduces new variable apart from noise in GAN framework. This term encourages high mutual information between generated samples and a small subset of latent variables. By this author forces high information content interesting aspects of the representation into the conditional variable. This work looked promising but when we tried to replicate the work, this model failed in producing consistent results with complex datasets
+
+
 \section{Improving GAN}
 
 In the work of ADAGAN, author address the issue of model collapse. Model collapse happens when you have very diverse data-set and your GAN is not able to learn the whole distribution and end up learning some part of it. So the author proposes using GAN in boosting algorithm. This work shows promises of tackling the issue of highly diverse data-set by using bunch of weak GANs.
