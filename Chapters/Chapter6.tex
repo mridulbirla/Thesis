@@ -1,3 +1,4 @@
+\doublespacing
 \chap{Experiments and Results}
 
 
@@ -37,7 +38,18 @@ Convolution 5 & 5*5    & 18       & Sigmoid
 \end{tabular}
 \end{table}
 \section{Training}
-Since the discriminator was weak, before actual training we trained the discriminator in two steps. Firstly we added a conditional vector to its input and removed the classification output of it. And we trained the discriminator with real images with incorrect label to classify as fake image. Secondly , to the original discriminator we copied the weights from the previous training and trained again on real images to classify the them into the particular class.  
+Since the discriminator was weak, before actual training we trained the discriminator in two steps. Firstly we added a conditional vector to its input and removed the classification output of it. And then we trained the discriminator with real images with incorrect label to classify as fake image. Secondly, to the original discriminator we copied the weights from the previous training and trained again on real images to classify the them into the particular class.  
+\par
+
+In the below figure we can look at the training losses for the generator and the discriminator. As we can observe after pre-training a GAN, we are able to reach a equilibrium loss for both generator and discriminator at around epoch 30. If we also look at graph closely, in starting epoch the generator and discriminator have a huge loss gap as we are playing minmax game. 
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.4, angle=0]{Files/Training-2.png}
+    \caption[Generator Architecture]{Generator Architecture\cite{DCGAN}}
+    \label{fig:celeba}
+\end{figure}
+
 \section{DataSet}
 \subsection{CelebA}
 The CelebFaces Attributes dataset (CelebA)\cite{celeba} contains 202599 face images of celebrities. As some of the categories are very less , so we removed certain categories from our training. . The sdistribution of the overall dataset is shown in \cref{fig:celeba}. As part of preprocessing, we crop the images to $64 \times 64$.The reason for cropping the images is to focus on faces in the images and as they are already aligned.
@@ -57,8 +69,18 @@ The MNIST dataset is very standard image processing dataset. This dataset contai
 
 
 \section{Evaluation}
-It is very challenging to evaluate the performance of GAN networks. So, to evaluate and examine the performance we devised two methods. In the first method we will use the same discriminator to evaluate the accuracy of these images. Also to examine the over-fitting we look at the latent space.
+It is very challenging to evaluate the performance of GAN networks. So, to evaluate and examine the performance we devised two methods. In the first method we will use the same discriminator to evaluate the accuracy of these images. Also to examine the over-fitting we look at the latent space.   
 
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|llll|}
+\hline
+Bald & \includegraphics[width=1.69cm, height=1.69cm]{Files/Algorithm.png}  &  &  &  \\ \hline
+ 
+\end{tabular}
+\end{table}
 
 
 
