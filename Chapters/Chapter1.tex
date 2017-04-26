@@ -2,11 +2,11 @@
 
 % For all chapters, use the newdefined chap{} instead of chapter{}
 % This will make the text at the top-left of the page be the same as the chapter
-
+\doublespacing
 \chap{Introduction}
-
-In recent year there has been lot of research going on in area of deep learning. It has paved way for many abstruse problem in the field of computer vision. Convolution neural network have become so powerful that, they been able to object recognition better than human\cite{CNN-Better,krizhevsky2012imagenet,szegedy2015going,he2016deep,simonyan2014very}. Many researchers\cite{1608.08225} through empirical or statistical analysis have hypothesised why deep neural network work so very well.  had always  For many years deep learning used to be considered a black box as it has innumerable interacting, non linear parts. But recent progress was fueled by development of tools \cite{tensorflow2015-whitepaper} which enabled researchers to visualize and interpret the hidden layers of neural networks\cite{1506.06579}.
-The CNN have shown excellent capability in classification task\cite{CNN-Better} but they require large amount of labeled data. Labeling and gathering large data require lot of human effort and money. This work tries to reduce this by developing generative model which are capable of generating labeled data.
+   
+In recent years, there has been a lot of research going on in the area of deep learning. It has paved path for many abstruse problems in the field of computer vision such as self driving cars, human facial expression detection\cite{1612.02903}. Convolutional neural network have become so powerful that, they have outperformed humans in  object recognition \cite{CNN-Better,krizhevsky2012imagenet,szegedy2015going,he2016deep,simonyan2014very}.  For many years deep learning used to be considered a black box as it has innumerable interacting, non linear parts. To study what each of its neurons has learned to detect is to visualize when does each neurons get triggered.
+Development of tools such as \cite{tensorflow2015-whitepaper} which have enabled researchers to visualize and interpret the hidden layers of neural networks \cite{1506.06579}. 
 
 \begin{figure}[H]
   \centering
@@ -16,5 +16,16 @@ The CNN have shown excellent capability in classification task\cite{CNN-Better} 
 \end{figure}
 
 \section{Synthetic Image Generation}
-Image generation is one the key research area in field of computer vision. From statistical point of view we are trying to mimic distribution of a data-set. In this work we are trying to synthesis the images based on some given condition. Most widely used method before GAN used probabilistic generative models which are discussed in section 2.1.This work uses Generative Adversarial network framework for image generation .This technique was first introduced by ..... . been The paper proposed framework which was highly unstable and laked quality generated images.  This work focuses on the aspect of stabilising and reviewing the latest GAN frameworks.
+Image generation is one the key research area in field of computer vision. In supervised learning, when given data and its label we try to model a function which learns the mapping of data to its label. A complexity of data grows , it becomes very hard to model a function that can cover all the features of the data. Deep learning takes advantage of this with higher-level learned
+features defined in terms of lower-level features \cite{bengio2012deep}. In other words, we are trying to find the posterior probability distribution of an object in an image, $P(y|x)$.
+In unsupervised learning we have given data sample but we don't have the target or the output label. In unsupervised learning , the model tries understand and model the whole data. Image generation falls under the category of unsupervised learning where the we are trying to mimic the distribution of images present in the dataset. In this work we have synthesised the images based on given conditions. Most widely used method before Generative Adversarial Network involved using probabilistic generative models which are discussed in section 2.1. This work uses Generative Adversarial Network framework for image generation which was first introduced by Goodfellow \textit{et al.} \cite{Original-GAN}. But the proposed  framework is highly unstable and generated low quality images. This work focuses on the aspect of stabilising and reviewing the latest GAN frameworks.
 
+\section{Motivation}
+
+There has been lot of research going on area on generative framework. After the first paper there have been lot of paper which have modified and tweaked the framework to produce quality data sample. There are various frameworks which have tried various approaches to make GAN work. 
+The CNN have shown excellent capability in classification task\cite{CNN-Better} but they require large amount of labeled data. Labeling and gathering large data require lot of human effort and money. This work tries to reduce this by developing generative model which are capable of generating labeled data.
+
+
+\section{Organization}
+
+To explain this work, we start with  \autoref{chap:RelatedWork}. In this chapter we look at various work done in field of generative model and also look at different models based on generative adversarial network. In the next \autoref{chap:CNN} we look at the key building block of this work, which is perceptron and later convolutional neural Network. Then in next \autoref{chap:GAN} we explain the concept of generative adversarial framework. Now once we understood the GAN we look at modification done as part of this work in \autoref{chap:EGAN}. Later in \autoref{chap:result}, we look at some of the experiments and result obtained when framework shown in \autoref{chap:EGAN} is implemented.
