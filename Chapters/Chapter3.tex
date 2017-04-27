@@ -12,8 +12,7 @@ The very basic definition of an artificial neural network is “a computer syste
 In very abstract terms, a neural network contains various neurons each having multiple inputs and importance of each input is given by its weight. A network of these neurons form neural network. We now look at the basic building blocks of a neural network.
 
 \subsection{Neuron}
-In nature a neuroAny good slack communities for node js that one can join ?
-n consists of dendrites and  axons. The dendrites provide inputs to neuron from other neurons. After receiving the input, the neuron produces the output along the axons. The neuron sums up all the signals received from dendrites and activates based on some threshold value. 
+In nature a neuron consists of dendrites and  axons. The dendrites provide inputs to neuron from other neurons. After receiving the input, the neuron produces the output along the axons. The neuron sums up all the signals received from dendrites and activates based on some threshold value. 
 
 \begin{figure}[H]
   \centering
@@ -68,8 +67,14 @@ From the CNN and image perspective, our image becomes f(x) and kernel or feature
 Once convolution operation has been performed we apply a non linear activation function such as tanh, RELU, leakyRELU.
 
 \subsection{Pooling}
-Pooling is basically reducing the dimension space as it get increased by adding various feature maps. To reduce the dimension, there are various kinds of pooling function such as max, add, min. Here based on value of receptive field, the pooling operation is performed over the feature map obtained from the previous layer. For example, for a receptive field of value 2 and pooling function as max, we take a max value from every $2 \times 2$ area of feature map.
+Pooling is one the important building block.It  basically reducing the feature maps by using some functions such taking maximum or minimum or avergae value of a subregion. Here based on value of receptive field, the pooling operation is performed over the feature map obtained from the previous layer. For example, for a receptive field of value 3 and pooling function as average, we average a max value from every $3 \times 3$ area of feature map.
 
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.6, angle=0]{Files/cnn-2.png}
+    \caption[Convolutional Neural Network]{Convolutional Neural Network}
+    \label{fig:CNN}
+\end{figure}
 
 \subsection{Fully Connected layer}
 The last output layer is a fully connected layer over which various cost function such as sigmoid, soft-max are applied to generate the output.
