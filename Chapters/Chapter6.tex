@@ -46,10 +46,16 @@ In the below figure we can look at the training losses for the generator and the
 \begin{figure}[H]
   \centering
     \includegraphics[scale=.4, angle=0]{Files/Training-2.png}
-    \caption[Generator Architecture]{Generator Architecture\cite{DCGAN}}
-    \label{fig:celeba}
+    \caption[Generator Discrminator Loss for Celeba dataset]{}
+    \label{fig:train-celeba}
 \end{figure}
 
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.4, angle=0]{Files/MNIST-GAN.png}
+    \caption[Generator Discrminator Loss for MNIST dataset]{}
+    \label{fig:train-mnist}
+\end{figure}
 \section{DataSet}
 \subsection{CelebA}
 The CelebFaces Attributes dataset (CelebA)\cite{celeba} contains 202599 face images of celebrities. As some of the categories are very less , so we removed certain categories from our training. . The sdistribution of the overall dataset is shown in \cref{fig:celeba}. As part of preprocessing, we crop the images to $64 \times 64$.The reason for cropping the images is to focus on faces in the images and as they are already aligned.
