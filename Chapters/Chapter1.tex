@@ -5,8 +5,12 @@
 \doublespacing
 \chap{Introduction}
    
-In recent years, there has been a lot of research going on in the area of deep learning. It has paved path for solving many abstruse problems in the field of computer vision such as self driving cars, human facial expression detection\cite{1612.02903}. Convolutional neural network have become so powerful that, they have outperformed humans in  object recognition \cite{CNN-Better,krizhevsky2012imagenet,szegedy2015going,he2016deep,simonyan2014very}.  For many years deep learning used to be considered a black box as it has innumerable interacting, non linear parts. To study what each of its neurons has learned to detect is to visualize when does each neurons get triggered.
-Development of tools such as \cite{tensorflow2015-whitepaper} which have enabled researchers to visualize and interpret the hidden layers of neural networks \cite{1506.06579}. 
+In recent years, there has been a lot of research going on in the area of deep learning. It has paved path for solving many abstruse problems in the field of computer vision such as self driving cars, human facial expression detection\cite{1612.02903}. Convolutional neural network have become so powerful that, they have outperformed humans in object recognition \cite{CNN-Better,krizhevsky2012imagenet,szegedy2015going,he2016deep,simonyan2014very}. For many years deep learning used to be considered a black box as it has innumerable interacting, non linear parts. To study what each of its neurons has learned to detect is to visualize when does each neurons get triggered. Development of many tools and techniques have enabled researchers to visualize and interpret the hidden layers of neural networks. This not only has enable researchers to improve the CNN for various supervised learning algorithms but also use them in different unsupervised learning task \cite{1506.06579}. 
+
+\par
+
+Image generative models have been used for wide variety of problems such as applying various fancy filters over images, compression and decompression of images, super resolution of an image \cite{1609.04802}, image inpainting \cite{1607.07539}.
+ One of the major advantage for image generation is the easy availability and accessibility  of images repositories \cite{celeba} , as it does not require labeled dataset.
 
 \begin{figure}[H]
   \centering
@@ -15,16 +19,23 @@ Development of tools such as \cite{tensorflow2015-whitepaper} which have enabled
     \label{fig:visualize-cnn}
 \end{figure}
 
+
+
+
+
+
+
+
 \section{Synthetic Image Generation}
-Image generation is one the key research area in field of computer vision. In supervised learning, when given data and its label we try to model a function which learns the mapping of data to its label. A complexity of data grows , it becomes very hard to model a function that can cover all the features of the data. Deep learning takes advantage of this with higher-level learned
+Image generation is one the central research area under the category of unsupervised learning. To understand unsupervised learning, lets look at supervised learning first. In supervised learning, when given data and its label we try to model a function which learns the mapping of data to its label. A complexity of data grows , it becomes very hard to model a function that can cover all the features of the data. Deep learning takes advantage of this with higher-level learned
 features defined in terms of lower-level features \cite{bengio2012deep}. In other words, we are trying to find the posterior probability distribution of an object in an image, $P(y|x)$.
-In unsupervised learning we have given data sample but we don't have the target or the output label. In unsupervised learning , the model tries understand and model the whole data. Image generation falls under the category of unsupervised learning where the we are trying to mimic the distribution of images present in the dataset. In this work we have synthesised the images based on given conditions. Most widely used method before Generative Adversarial Network involved using probabilistic generative models which are discussed in section 2.1. This work uses Generative Adversarial Network framework for image generation which was first introduced by Goodfellow \textit{et al.} \cite{Original-GAN}. But the proposed  framework is highly unstable and generated low quality images. This work focuses on the aspect of stabilising and reviewing the latest GAN frameworks.
+In unsupervised learning, we are given the data sample but we don't have the target or the output label. In unsupervised learning, the model tries understand and model the whole data. There are several unsupervised machine learning algorithms such as KNN, clustering etc. Hence, image generation problem falls under the category of unsupervised learning where the we are trying to mimic the distribution of images present in the dataset. In this work, we have synthesised the images based on some given conditions. Most widely used method before Generative Adversarial Network involved using probabilistic generative models which are discussed in section 2.1. This work uses Generative Adversarial Network framework for image generation which was first introduced by Goodfellow \textit{et al.} \cite{Original-GAN}. But the proposed  framework is highly unstable and generated low quality images. This work focuses on the aspect of stabilising and reviewing the latest GAN frameworks.
 
 \section{Motivation}
 
-There has been lot of research going on area on generative framework. After the first paper there have been lot of paper which have modified and tweaked the framework to produce quality data sample. There are various frameworks which have tried various approaches to make GAN work. 
-The CNN have shown excellent capability in classification task\cite{CNN-Better} but they require large amount of labeled data. Labeling and gathering large data require lot of human effort and money. This work tries to reduce this by developing generative model which are capable of generating labeled data.
 
+The CNN have shown excellent capability in classification task\cite{CNN-Better} but they require large amount of labeled data. Labeling and gathering large data require lot of human effort and money. This work tries to reduce this by developing generative model which are capable of generating labeled data.
+There has been lot of research going on area in the area of generative framework. After the first paper there have been lot of papers which have modified and tweaked the framework to produce quality data sample. There are various frameworks which have tried various approaches to make GAN work. 
 
 \section{Organization}
 

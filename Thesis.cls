@@ -27,15 +27,15 @@
 \newcommand\bhrule{\typeout{------------------------------------------------------------------------------}}
 
 \newcommand\Declaration[1]{
-\btypeout{Declaration of Authorship}
-\addtotoc{Declaration of Authorship}
+\btypeout{Thesis Committee}
+\addtotoc{Thesis Committee}
 \thispagestyle{plain}
-\null\vfil
+%\null\vfil
 %\vskip 60\p@
-\begin{center}{\huge\bf Declaration of Authorship\par}\end{center}
+
 %\vskip 60\p@
 {\normalsize #1}
-\vfil\vfil\null
+%\vfil\vfil\null
 %\cleardoublepage
 }
 
@@ -126,7 +126,7 @@
         stringstyle=\color[rgb]{0.7,0,0} }
 \usepackage[pdfpagemode={UseOutlines},bookmarks=true,bookmarksopen=true,
    bookmarksopenlevel=0,bookmarksnumbered=true,hypertexnames=false,
-   colorlinks,linkcolor={blue},citecolor={blue},urlcolor={red},
+   colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue},
    pdfstartview={FitV},unicode,breaklinks=true]{hyperref}
 \pdfstringdefDisableCommands{
    \let\\\space
@@ -140,10 +140,10 @@
 \newcommand*{\UNIVERSITY}[1]{\def\UNIVNAME{#1}}
 \newcommand*{\department}[1]{\def\deptname{#1}}
 \newcommand*{\DEPARTMENT}[1]{\def\DEPTNAME{#1}}
-\newcommand*{\group}[1]{\def\groupname{#1}}
-\newcommand*{\GROUP}[1]{\def\GROUPNAME{#1}}
-\newcommand*{\faculty}[1]{\def\facname{#1}}
-\newcommand*{\FACULTY}[1]{\def\FACNAME{#1}}
+%\newcommand*{\group}[1]{\def\groupname{#1}}
+%\newcommand*{\GROUP}[1]{\def\GROUPNAME{#1}}
+%\newcommand*{\faculty}[1]{\def\facname{#1}}
+%\newcommand*{\FACULTY}[1]{\def\FACNAME{#1}}
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 \newcommand{\chap}[1]{ \chapter{#1} \lhead{\emph{#1}} }
@@ -165,18 +165,18 @@
 \DEPARTMENT  {\texorpdfstring{\href{\myDepartmentWeb}
                 {\MakeUppercase{\myDepartment}}}
                 {\MakeUppercase{\myDepartment}}}
-\group       {\texorpdfstring{\href{\myGroupWeb}
-                {\myGroup}}
-                {\myGroup}}
-\GROUP       {\texorpdfstring{\href{\myGroupWeb}
-                {\MakeUppercase{\myGroup}}}
-                {\MakeUppercase{\myGroup}}}
-\faculty     {\texorpdfstring{\href{\myFacultyWeb}
-                {\myFaculty}}
-                {\myFaculty}}
-\FACULTY     {\texorpdfstring{\href{\myFacultyWeb}
-                {\MakeUppercase{\myFaculty}}}
-                {\MakeUppercase{\myFaculty}}}
+%\group       {\texorpdfstring{\href{\myGroupWeb}
+%                {\myGroup}}
+%                {\myGroup}}
+%\GROUP       {\texorpdfstring{\href{\myGroupWeb}
+%                {\MakeUppercase{\myGroup}}}
+%                {\MakeUppercase{\myGroup}}}
+%\faculty     {\texorpdfstring{\href{\myFacultyWeb}
+%                {\myFaculty}}
+%                {\myFaculty}}
+%\FACULTY     {\texorpdfstring{\href{\myFacultyWeb}
+%                {\MakeUppercase{\myFaculty}}}
+%                {\MakeUppercase{\myFaculty}}}
 \addresses   {}
 \subject     {}
 \keywords    {}
@@ -209,7 +209,7 @@
       \bigskip
       \bigskip
       {\large in the \par}
-      {\large \facname \par}
+     
       {\large \deptname \par}
       \bigskip
       \bigskip
@@ -245,8 +245,7 @@
     \bigskip
     {\huge{\textit{Abstract}} \par}
     \bigskip
-    {\normalsize \facname \par}
-    {\normalsize \deptname \par}
+    
     \bigskip     
     {\normalsize \myDegree \par}
     \bigskip

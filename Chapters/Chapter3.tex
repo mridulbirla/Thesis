@@ -39,7 +39,7 @@ The feed forward neural network is an extension of the above concept. It consist
   \centering
     \includegraphics[scale=.4, angle=0]{Files/BackPropagation.png}
     \caption[Back Propagation Visualization]{Back Propagation Visualization}
-    \label{fig:FFNN}
+    \label{fig:backpropogation}
 \end{figure}
 
 \section{Convolution Neural Network}
@@ -67,13 +67,13 @@ From the CNN and image perspective, our image becomes f(x) and kernel or feature
 Once convolution operation has been performed we apply a non linear activation function such as tanh, RELU, leakyRELU.
 
 \subsection{Pooling}
-Pooling is one the important building block.It  basically reducing the feature maps by using some functions such taking maximum or minimum or avergae value of a subregion. Here based on value of receptive field, the pooling operation is performed over the feature map obtained from the previous layer. For example, for a receptive field of value 3 and pooling function as average, we average a max value from every $3 \times 3$ area of feature map.
+Pooling is one the important building block of CNN. The main aim of the pooling operation is the reduction of feature maps by using some functions such taking maximum or minimum or average value of a subregions. Based on value of receptive field, the pooling operation is performed over the feature map obtained from the previous layer. For example, for a receptive field of value 3 and pooling function as average, we average a max value from every $3 \times 3$ area of feature map.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[scale=.6, angle=0]{Files/cnn-2.png}
-    \caption[Convolutional Neural Network]{Convolutional Neural Network}
-    \label{fig:CNN}
+    \includegraphics[scale=.3, angle=0]{Files/Pooling.png}
+    \caption[Pooling Operation]{Computing output when $3 \times 3$ average pooling operation is performed \cite{1603.07285}}
+    \label{fig:Pooling}
 \end{figure}
 
 \subsection{Fully Connected layer}
