@@ -4,10 +4,10 @@
 
 \section{Introduction}
 
-In this chapter, we look at the implementation perspective of the whole system. We also look at the three dataset we used and the results obtained from them. 
+In this chapter, we look at the implementation perspective of the whole system. We also look at the two dataset we used and the results obtained from them. 
 
 \section{Implementation Details}
-To implement the conditional generative adversarial network we used Tensorflow\cite{tensorflow2015-whitepaper} with Kera\cite{keras}. The structure of generator and discriminator are described in \cref{Generator-Activation} and \cref{Discriminator-Table}.
+To implement the conditional generative adversarial network we used Tensorflow \cite{tensorflow2015-whitepaper} with Kera\ci te{keras} as our framework. These libraries not only provide enough support for our approach but also have very optimized code to run on powerful GPUs. The structure of the generator and discriminator are described in \cref{Generator-Activation} and \cref{Discriminator-Table}.
 \begin{table}[ht]
 \centering
 \caption{Generator Architecture Specification}
@@ -38,10 +38,10 @@ Convolution 5 & 5*5    & 18       & Sigmoid
 \end{tabular}
 \end{table}
 \section{Training}
-Since the discriminator was weak, before actual training we trained the discriminator in two steps. Firstly we added a conditional vector to its input and removed the classification output of it. And then we trained the discriminator with real images with incorrect label to classify as fake image. Secondly, to the original discriminator we copied the weights from the previous training and trained again on real images to classify the them into the particular class.  
+Since the discriminator was weak, before actual training we trained the discriminator in two steps. Firstly, we added a conditional vector to its input and removed the classification output of it. Then we trained the discriminator with real images with incorrect labels to classify as fake images. Later, to the original discriminator we copied the weights from the previous, training and trained again on real images to classify them into the particular class.  
 
 
-In the below figure we can look at the training losses for the generator and the discriminator. As we can observe after pre-training a GAN, we are able to reach a equilibrium loss for both generator and discriminator at around epoch 30. If we also look at graph closely, in starting epoch the generator and discriminator have a huge loss gap as we are playing minmax game. 
+In the \cref{fig:train-celeba}, we can look at the training losses for the generator and the discriminator. As we can observe after pre-training a GAN, we are able to reach an equilibrium loss for both generator and discriminator at around epoch 30. If we also look at graph closely, in starting epoch the generator and discriminator have a huge loss gap as we are playing minmax game and as the we progress the gap in looses starts to shrink. The \cref{fig:train-mnist} shows the loss of the generator and discriminator when trained using MNIST \cite{MNIST} images. The number of epochs required by MNIST is very less as compared to celeba, as details required to generate a face are more complex as compared to digits.
 
 \begin{figure}[H]
   \centering
@@ -56,9 +56,9 @@ In the below figure we can look at the training losses for the generator and the
     \caption[Generator Discrminator Loss for MNIST dataset]{}
     \label{fig:train-mnist}
 \end{figure}
-\section{DataSet}
+\section{Dataset}
 \subsection{CelebA}
-The CelebFaces Attributes dataset (CelebA)\cite{celeba} contains 202599 face images of celebrities. As some of the categories are very less , so we removed certain categories from our training. . The sdistribution of the overall dataset is shown in \cref{fig:celeba}. As part of preprocessing, we crop the images to $64 \times 64$.The reason for cropping the images is to focus on faces in the images and as they are already aligned.
+The CelebFaces Attributes dataset (CelebA) \cite{celeba} contains 202599 face images of celebrities. As some of the categories are very infrequent , so we removed certain categories from our training. The distribution of the overall dataset is shown in \cref{fig:celeba}. As part of preprocessing, we crop the pre-aligned images to $64 \times 64$. The reason for cropping the images is to focus on faces in the images and remove as much as background possible.
 
 
 \begin{figure}[H]
@@ -70,11 +70,11 @@ The CelebFaces Attributes dataset (CelebA)\cite{celeba} contains 202599 face ima
 %\subsection{CIFAR-10}
 
 \subsection{MNIST}
-The MNIST dataset is very standard image processing dataset. This dataset contains 60000 labeled images of digits from 0 to 9. This dataset helps in validating the models correctness in very short time. Since neural  network take lot of time to converge, so if we have some issue with our implementation or logic then we can debug in very short amount of time using this dataset.
+MNIST \cite{MNIST} dataset is a standard image processing dataset. This dataset contains 60000 labeled images of digits from 0 to 9. This dataset helps in validating the models correctness in a very short time. Since neural  networks take lot of time to converge, if we have some issue with our implementation or logic then we can debug in a much shorter amount of time using this dataset.
 
 \section{Results}
 
-Once the generator has been trained, we look at the images being generated by our generator. by passing some random noise(z) along with the conditional vector. We can see in \cref{Celeb-a} the various different category facial images being drawn by our generator. There were several categories as shown in \cref{U-celeb-a} for which generator was unsuccessful in getting desired facial attributes. Similarly, we generated different kind of digits from the MNIST trained generator as shown in \cref{MNIST-Result}. Since MNIST dataset does not involve any complexity, hence there were very less unsuccessful result when generating specific digits.
+Once the generator has been trained, we look at the images being generated by our generator by passing some random noise (z) along with the conditional vector. We can see in \cref{Celeb-a} the various different category facial images being drawn by our generator. There were several categories as shown in \cref{U-celeb-a} for which generator was unsuccessful in getting desired facial attributes. Similarly, we generated different kind of digits from the MNIST trained generator as shown in \cref{MNIST-Result}. Since the MNIST dataset does not involve much complexity, there were very less unsuccessful results when generating specific digits.
 
   
 
@@ -158,4 +158,4 @@ Receding Hairline & \includegraphics[width=1.69cm, height=1.69cm]{Files/images/i
 
 \section{Evaluation}
 
-It is very challenging to evaluate the performance of GAN networks as there has been no comparable method to judge the quality of images being produced.  To evaluate the performance of celebA \cite{celeba} dataset , we use the same discriminator and we train it over the real images dataset. Later we passed 100 generated images from each category to this CNN to obtain a mean accuracy of 85.23\%. We also ran text over Microsoft's Vision API \cite{Microsoft}, where we passed 1000 facial images for which it was able to detect faces with 96.88\%. 
+It is very challenging to evaluate the performance of GAN networks as there has been no comparable method to judge the quality of images being produced.  To evaluate the performance of celebA \cite{celeba} dataset, we use the same discriminator and we train it over the real images dataset. Later we passed 100 generated images from each category to this CNN to obtain a mean accuracy of 85.23\%. We also ran text over Microsoft's Vision API \cite{Microsoft}, where we passed 1000 facial images for which it was able to detect faces with 96.88\%. 
