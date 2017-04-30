@@ -64,7 +64,14 @@ From the CNN and image perspective, our image becomes f(x) and kernel or feature
 \end{itemize}
 
 \subsection{ Activation function}
-Once the convolution operation has been performed we apply a non linear activation function such as tanh, RELU, leakyRELU.
+Once the convolution operation has been performed we apply a non linear activation function such as tanh, RELU, leakyRELU, sigmoid on the feature map. The activation function takes input from the previous node and applies given mathematical operation over it. In \cref{fig:activation} illustrates commonly used activation functions in CNNS.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[scale=.3, angle=0]{Files/activation-functions.png}
+    \caption[Different Type of Activation Functions]{Different Type of Activation Functions \cite{activation}}
+    \label{fig:activation}
+\end{figure}
 
 \subsection{Pooling}
 Pooling is one of the important building blocks of a CNN. The main aim of the pooling operation is the reduction of feature maps by using some functions such taking maximum or minimum or average value of a subregions. Based on the value of the receptive field, the pooling operation is performed over the feature map obtained from the previous layer. For example, for a receptive field of value 3 and pooling function as average, we average a max value from every $3 \times 3$ area of feature map.
